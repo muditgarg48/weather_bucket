@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> Weather Man </title>
+        <script src="https://unpkg.com/vue@next"></script>
+        <link rel="stylesheet" href="app.css">
+    </head>
+    <body>
+        <h1 id="title">Weather Man</h1>
+        <hr>
+        <br>
+        <br>
+        <div id="app">
+            <div id="input">
+                Enter the city you wish to visit: 
+                &nbsp;
+                &nbsp;
+                <input type="text" v-model="message" v-on:keyup.enter="retrieve" placeholder="Dublin, IE" spellcheck="false">
+                &nbsp;
+                <br>
+                <br>
+                <br>
+                <button id="go" v-on:click="retrieve"><span>Go</span></button>
+                <button id="cls" v-on:click="clearInput"><span>Reset</span></button>
+            </div>
+            <br>
+            <br>
+            <div id="weather_status">
+                <div id="weather_icon">
+                    <img v-bind:src="weather_icon_url"/>
+                </div>
+                <br> 
+                <h2><b>{{feelsLike}}</b></h2>
+                <h4>Umbrella Check: {{umbrellaCheck}}</h4>
+                <br>
+                <br> 
+            </div>
+            <table v-if="show" id="summary">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th></th>
+                        <th>Description</th>
+                        <th>Temperature (°C)</th>
+                        <th>Feels Like (°C)</th>
+                        <th>Min Temp (°C)</th>
+                        <th>Max Temp (°C)</th>
+                        <th>Windspeed (m/s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in items">
+                        <td>{{new Date(item.dt_txt).toDateString()}}</td>
+                        <td>{{new Date(item.dt_txt).toLocaleTimeString()}}</td>
+                        <td><img v-bind:src="retrieveImg(item.weather[0])"/></td>
+                        <td><b>{{item.weather[0].description}}</b></td>
+                        <td>{{item.main.temp}}°</td>
+                        <td>{{item.main.feels_like}}°</td>
+                        <td>{{item.main.temp_min}}°</td>
+                        <td>{{item.main.temp_max}}°</td>
+                        <td>{{item.wind.speed}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="backend.js"></script>
+    </body>
+</html>

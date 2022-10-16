@@ -1,0 +1,115 @@
+html {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body {
+    background-image: url("https://images.theconversation.com/files/232705/original/file-20180820-30593-1nxanpj.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop");
+    /* background-image: url("https://cdn.dribbble.com/users/73884/screenshots/1395616/media/3ea0b7ffcc3e6c6a5a09f4fc9539da68.gif"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 5%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+   
+::-webkit-scrollbar-thumb {
+  background: url('https://www.pngjoy.com/pngl/41/952512_hamburger-icon-menubuttom-hamburger-menu-icon-white-transparent.png') rgba(146,187,255,1);
+  border-radius: 40px;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(146,187,255,0.5); 
+}  
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table {
+    width: 100%;
+    padding: 10%;
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: saturate(180%) blur(10px);
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+th, td {
+    padding: 7px;
+    text-align: center;
+}
+input[type=text] {
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    font-size: 30px;
+    outline: none;
+}
+button {
+    display: inline-block;
+    border-radius: 100px;
+    background: rgba(0,0,0,0.2);
+    border: none;
+    color: black;
+    text-align: center;
+    font-size: 20px;
+    padding: 10px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+  
+button span:after {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#go span:after {
+    content: '\00bb';
+    color: green;
+}
+
+#cls span:after {
+    content: 'x';
+    color: red;
+}
+  
+button:hover span {
+    padding-right: 25px;
+}
+  
+button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+#title, #input, #weather_status {
+    text-align: center;
+}
+#weather_icon {
+    border-radius: 50%;
+    box-shadow: 0 0 50px grey;
+    display: flex;
+    width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+    background: grey;
+    backdrop-filter: saturate(180%) blur(10px);
+}
