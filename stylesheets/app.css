@@ -2,6 +2,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 body {
     background-image: url("https://images.theconversation.com/files/232705/original/file-20180820-30593-1nxanpj.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop");
@@ -10,23 +11,8 @@ body {
     background-position: center;
     background-size: cover;
     padding: 5%;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent; 
-}
-   
-::-webkit-scrollbar-thumb {
-  background: url('https://www.pngjoy.com/pngl/41/952512_hamburger-icon-menubuttom-hamburger-menu-icon-white-transparent.png') rgba(146,187,255,1);
-  border-radius: 40px;
-}
-  
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(146,187,255,0.5); 
+    width: 100%;
+    height: 100%;
 }  
 
 table, th, td {
