@@ -38,12 +38,12 @@ var app = Vue.createApp({
         },
         retrieveImg(weather) {
             let icon = weather.icon
-            let url = "http://openweathermap.org/img/wn/"+icon+".png"
+            let url = "https://openweathermap.org/img/wn/"+icon+".png"
             return url
         },
         retrieveImg2x(weather) {
             let icon = weather.icon
-            let url = "http://openweathermap.org/img/wn/"+icon+"@2x.png"
+            let url = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
             return url
         },
         retrieveTodayWeather: async function() {
@@ -84,7 +84,7 @@ var app = Vue.createApp({
             this.items = data.list
         },
         retrievePollution: async function() {
-            let res = await fetch("http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.api_id)
+            let res = await fetch("https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.api_id)
             let data = await res.json()
             console.log("Pollution JSON:")
             console.log(data)
