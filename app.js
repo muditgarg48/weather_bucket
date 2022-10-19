@@ -18,11 +18,16 @@ var app = Vue.createApp({
         created() {
             console.clear()
         },
+        cityCapitalise() {
+            this.user_city = this.user_city[0].toUpperCase()+this.user_city.substr(1)
+        },
         responseCheck: async function() {
             let response = await this.retrieveTodayWeather()
             if(response.cod == '200') {
                 this.content_show = true
                 this.error_show = false
+                this.cityCapitalise(response)
+                console.log(`Weather bucket is looking at the forecast of ${this.user_city}`)
                 this.compute(response)
             } else if (response.cod == '404') {
                 this.content_show = false
@@ -112,7 +117,7 @@ var app = Vue.createApp({
             this.weather_icon_url = ''
         },
         printLocation() {
-            return this.user_city[0].toUpperCase()+this.user_city.substr(1)+" ("+this.lat+", "+this.lon+")"
+            return this.user_city+" ("+this.lat+", "+this.lon+")"
         }
     }
 }).mount('#app');
