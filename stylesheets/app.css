@@ -7,7 +7,6 @@ html {
 body {
     font-family: 'Kanit', sans-serif;
     background-image: url("https://images.theconversation.com/files/232705/original/file-20180820-30593-1nxanpj.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=900.0&fit=crop");
-    /* background-image: url("https://cdn.dribbble.com/users/73884/screenshots/1395616/media/3ea0b7ffcc3e6c6a5a09f4fc9539da68.gif"); */
     background-repeat:no-repeat;
     background-size: cover;
     padding: 0 5%;

@@ -31,8 +31,7 @@ button span:after {
 
 
 #go span:after {
-    /* content: '\00bb'; */
-    content: '⁜';
+    content: '\00bb';
     color: green;
 }
 
