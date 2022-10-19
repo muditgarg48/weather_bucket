@@ -1,0 +1,25 @@
+{
+  "name": "weather-bucket",
+  "description": "A simple app to use the OpenWeather API",
+  "version": "0.2.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muditgarg48/weather_bucket.git"
+  },
+  "author": "Mudit Garg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muditgarg48/weather_bucket/issues"
+  },
+  "homepage": "https://github.com/muditgarg48/weather_bucket#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20",
+    "request": "^2.88.2"
+  }
+}
