@@ -18,13 +18,6 @@ var app = Vue.createApp({
         created() {
             console.clear()
         },
-        printLocation() {
-            return this.user_city[0].toUpperCase()+this.user_city.substr(1)+" ("+this.lat+", "+this.lon+")"
-        },
-        posCalc(response) {
-            this.lat = response.coord.lat
-            this.lon = response.coord.lon
-        },
         responseCheck: async function() {
             let response = await this.retrieveTodayWeather()
             if(response.cod == '200') {
@@ -35,6 +28,18 @@ var app = Vue.createApp({
                 this.content_show = false
                 this.error_show = true
             }
+        },
+        compute(response) {
+            this.posCalc(response)
+            this.weather_icon_url = this.retrieveImg2x(response.weather[0])
+            this.rainStatus(response)
+            this.feelsLikeStatus(response)
+            this.forecastFetch()
+            this.retrievePollution()
+        },
+        posCalc(response) {
+            this.lat = response.coord.lat
+            this.lon = response.coord.lon
         },
         retrieveImg(weather) {
             let icon = weather.icon
@@ -96,14 +101,6 @@ var app = Vue.createApp({
                 }
             }
         },
-        compute(response) {
-            this.posCalc(response)
-            this.weather_icon_url = this.retrieveImg2x(response.weather[0])
-            this.rainStatus(response)
-            this.feelsLikeStatus(response)
-            this.forecastFetch()
-            this.retrievePollution()
-        },
         clearInput() {
             this.content_show = false
             this.error_show = false
@@ -113,6 +110,9 @@ var app = Vue.createApp({
             this.feelsLike = ''
             this.items = []
             this.weather_icon_url = ''
+        },
+        printLocation() {
+            return this.user_city[0].toUpperCase()+this.user_city.substr(1)+" ("+this.lat+", "+this.lon+")"
         }
     }
 }).mount('#app');
