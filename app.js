@@ -1,3 +1,4 @@
+
 var app = Vue.createApp({
     data() {
         return {
@@ -34,6 +35,22 @@ var app = Vue.createApp({
                 this.error_show = true
             }
         },
+        retrieveTodayWeather: async function() {
+            //Fetching the weather data for today !!
+            let origin = "http://localhost:5510/"
+            let server_response = await fetch(origin+"current_weather/"+this.user_city)
+            server_response = await server_response.json()
+            if(server_response.data == "404") {
+                let error_response = {"cod":'404', "message":"City not found!"}
+                console.log(error_response)
+                return error_response
+            }
+            console.log("========================")
+            let server_data = server_response
+            // console.log("Weather JSON Data:")
+            // console.log(server_data)
+            return server_data
+        },
         compute(response) {
             this.posCalc(response)
             this.weather_icon_url = this.retrieveImg2x(response.weather[0])
@@ -55,14 +72,6 @@ var app = Vue.createApp({
             let icon = weather.icon
             let url = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
             return url
-        },
-        retrieveTodayWeather: async function() {
-            //Fetching the weather data for today !!
-            let res = await fetch("https://api.openweathermap.org/data/2.5/weather?q="+this.user_city+"&units=metric&APPID="+this.api_id)
-            let response = await res.json() 
-            console.log("Weather JSON:")
-            console.log(response)
-            return response
         },
         rainStatus(response) {
             // Rain ????
@@ -87,6 +96,7 @@ var app = Vue.createApp({
         },
         forecastFetch: async function() {
             //Fetching the forecast data for 4 days !!
+            
             let resp = await fetch("https://api.openweathermap.org/data/2.5/forecast?q="+this.user_city+"&units=metric&cnt=32&APPID="+this.api_id)
             let data = await resp.json() 
             console.log("Forecast JSON:")
