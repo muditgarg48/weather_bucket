@@ -42,13 +42,14 @@ var app = Vue.createApp({
             server_response = await server_response.json()
             if(server_response.data == "404") {
                 let error_response = {"cod":'404', "message":"City not found!"}
+                console.log("========================")
                 console.log(error_response)
                 return error_response
             }
             console.log("========================")
             let server_data = server_response
-            // console.log("Weather JSON Data:")
-            // console.log(server_data)
+            console.log("Current Weather JSON Data:")
+            console.log(server_data)
             return server_data
         },
         compute(response) {
@@ -99,14 +100,14 @@ var app = Vue.createApp({
             
             let resp = await fetch("https://api.openweathermap.org/data/2.5/forecast?q="+this.user_city+"&units=metric&cnt=32&APPID="+this.api_id)
             let data = await resp.json() 
-            console.log("Forecast JSON:")
+            console.log("Forecast JSON Data:")
             console.log(data)
             this.items = data.list
         },
         retrievePollution: async function() {
             let res = await fetch("https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.api_id)
             let data = await res.json()
-            console.log("Pollution JSON:")
+            console.log("Pollution JSON Data:")
             console.log(data)
             let list = data.list
             for(let i=0;i<92;i++) {
