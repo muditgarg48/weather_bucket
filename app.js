@@ -52,6 +52,30 @@ var app = Vue.createApp({
             console.log(server_data)
             return server_data
         },
+        forecastFetch: async function() {
+            //Fetching the forecast data for 4 days !!
+            let origin = "http://localhost:5510/"
+            let server_response = await fetch(origin+"future_forecast/"+this.user_city)
+            let data = await server_response.json() 
+            console.log("Forecast JSON Data:")
+            console.log(data)
+            this.items = data.list
+        },
+        retrievePollution: async function() {
+            //Fetching the pollution data for 4 days !!
+            let origin = "http://localhost:5510/"
+            let server_response = await fetch(origin+"pollution/"+this.lat+","+this.lon)
+            let data = await server_response.json() 
+            console.log("Pollution JSON Data:")
+            console.log(data)
+            let list = data.list
+            for(let i=0;i<92;i++) {
+                let pm_lvl = list[i].components.pm2_5
+                if(pm_lvl >= 10) {
+                    this.pollution_show = true
+                }
+            }
+        },
         compute(response) {
             this.posCalc(response)
             this.weather_icon_url = this.retrieveImg2x(response.weather[0])
@@ -93,28 +117,6 @@ var app = Vue.createApp({
                 this.feelsLike = "Pack for MILD. "+ this.feelsLike
             } else if(feels_like>=24) {
                 this.feelsLike = "Pack for HOT. "+ this.feelsLike
-            }
-        },
-        forecastFetch: async function() {
-            //Fetching the forecast data for 4 days !!
-            
-            let resp = await fetch("https://api.openweathermap.org/data/2.5/forecast?q="+this.user_city+"&units=metric&cnt=32&APPID="+this.api_id)
-            let data = await resp.json() 
-            console.log("Forecast JSON Data:")
-            console.log(data)
-            this.items = data.list
-        },
-        retrievePollution: async function() {
-            let res = await fetch("https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.api_id)
-            let data = await res.json()
-            console.log("Pollution JSON Data:")
-            console.log(data)
-            let list = data.list
-            for(let i=0;i<92;i++) {
-                let pm_lvl = list[i].components.pm2_5
-                if(pm_lvl >= 10) {
-                    this.pollution_show = true
-                }
             }
         },
         clearInput() {

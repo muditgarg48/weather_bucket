@@ -37,3 +37,19 @@ app.get('/current_weather/:city', async (req,res) => {
         res.send(response)
     }
 })
+
+app.get('/future_forecast/:city', async (req,res) => {
+    response = await axios.get("https://api.openweathermap.org/data/2.5/forecast?q="+req.params.city+"&units=metric&cnt=32&APPID="+api_id)
+    let json = response.data
+    // console.log(json)
+    res.send(json)
+    console.log("Future weather data for "+req.params.city+" sent to the frontend for display!!")
+})
+
+app.get('/pollution/:lat,:lon', async (req,res) => {
+    response = await axios.get("https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+req.params.lat+"&lon="+req.params.lon+"&appid="+api_id)
+    let json = response.data
+    // console.log(json)
+    res.send(json)
+    console.log("Pollution data for ("+req.params.lat+", "+req.params.lon+")")
+})
