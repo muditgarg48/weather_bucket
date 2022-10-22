@@ -60,6 +60,7 @@ var app = Vue.createApp({
             console.log("Forecast JSON Data:")
             console.log(data)
             this.items = data.list
+            this.rainStatus()
         },
         retrievePollution: async function() {
             //Fetching the pollution data for 4 days !!
@@ -79,7 +80,6 @@ var app = Vue.createApp({
         compute(response) {
             this.posCalc(response)
             this.weather_icon_url = this.retrieveImg2x(response.weather[0])
-            this.rainStatus(response)
             this.feelsLikeStatus(response)
             this.forecastFetch()
             this.retrievePollution()
@@ -98,13 +98,15 @@ var app = Vue.createApp({
             let url = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
             return url
         },
-        rainStatus(response) {
+        rainStatus() {
             // Rain ????
-            let rain = response.rain
-            if(rain == true) {
-                this.umbrellaCheck = "Carry an umbrella ☔✔️"
-            } else {
-                this.umbrellaCheck = "Way to go, no rain ⛅❌"
+            console.log("Rain Status function")
+            this.umbrellaCheck = "⛅🎐 The skies are clear for a few days 🎐⛅"
+            for(let i=0;i<this.items.length;i++) {
+                let rain = this.items[i].rain
+                if(rain != undefined) {
+                    this.umbrellaCheck = "🌧🌂 You should keep an umbrella with you 🌂🌧"
+                }
             }
         },
         feelsLikeStatus(response) {
