@@ -65,6 +65,7 @@
                         <th>Min Temp (°C)</th>
                         <th>Max Temp (°C)</th>
                         <th>Windspeed (m/s)</th>
+                        <th>Rainfall (mm)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,6 +79,8 @@
                         <td>{{item.main.temp_min}}°</td>
                         <td>{{item.main.temp_max}}°</td>
                         <td>{{item.wind.speed}}</td>
+                        <td v-if="item.rain == undefined">0</td>
+                        <td v-else>{{item.rain["3h"]}}</td>
                     </tr>
                 </tbody>
             </table>
