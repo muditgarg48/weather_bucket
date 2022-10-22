@@ -16,13 +16,12 @@ var app = Vue.createApp({
         }
     },
     methods: {
-        created() {
-            console.clear()
-        },
         cityCapitalise() {
+            // a minor function just to capitalise the first letter of the city
             this.user_city = this.user_city[0].toUpperCase()+this.user_city.substr(1)
         },
         responseCheck: async function() {
+            //Function to check if the current city entered, exists or not
             let response = await this.retrieveTodayWeather()
             if(response.cod == '200') {
                 this.content_show = true
@@ -78,6 +77,7 @@ var app = Vue.createApp({
             }
         },
         compute(response) {
+            // Main Function calling other functions to do every task required
             this.posCalc(response)
             this.weather_icon_url = this.retrieveImg2x(response.weather[0])
             this.feelsLikeStatus(response)
@@ -85,22 +85,24 @@ var app = Vue.createApp({
             this.retrievePollution()
         },
         posCalc(response) {
+            // Storing the lattitude and longitude of the current city
             this.lat = response.coord.lat
             this.lon = response.coord.lon
         },
         retrieveImg(weather) {
+            // Retrieving icon based on the current weather
             let icon = weather.icon
             let url = "https://openweathermap.org/img/wn/"+icon+".png"
             return url
         },
         retrieveImg2x(weather) {
+            // Retrieving icon based on the current weather double the size
             let icon = weather.icon
             let url = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
             return url
         },
         rainStatus() {
-            // Rain ????
-            console.log("Rain Status function")
+            // Rain Status Check
             this.umbrellaCheck = "⛅🎐 The skies are clear for a few days 🎐⛅"
             for(let i=0;i<this.items.length;i++) {
                 let rain = this.items[i].rain
@@ -110,7 +112,7 @@ var app = Vue.createApp({
             }
         },
         feelsLikeStatus(response) {
-            // Feels like ????
+            // Feels like Message construction
             let feels_like = response.main.feels_like
             this.feelsLike = "It feels like "+ (feels_like)+"°C"
             if(feels_like<=12) {
@@ -122,6 +124,7 @@ var app = Vue.createApp({
             }
         },
         clearInput() {
+            // Clearing all variables
             this.content_show = false
             this.error_show = false
             this.pollution_show = false
@@ -132,7 +135,10 @@ var app = Vue.createApp({
             this.weather_icon_url = ''
         },
         printLocation() {
+            // Printing Location Name and Lattitude and Longitude
             return this.user_city+" ("+this.lat+", "+this.lon+")"
         }
     }
-}).mount('#app');
+})
+
+app.mount('#app');
