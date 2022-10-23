@@ -19,7 +19,7 @@ app.use(express.static(PATH));
 
 // Make the server listen to the requests on the port mentioned
 app.listen(PORT, () => {
-    console.log(`Weather Bucket app listening on port ${PORT}!`)
+    console.log(`Weather Bucket ready to listen on address http://localhost:${PORT}/ !`)
 })
 
 // Sending the HTML file on calling the home address
