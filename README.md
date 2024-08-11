@@ -1,6 +1,6 @@
 # Weather App Project
 
-This is a weather app project that utilizes the OpenWeather API to display weather and pollution data for every hour over the next 4 days. The app is built using Node.js, Vue.js, HTML, CSS, and JavaScript.
+This weather app project utilizes the OpenWeather API to display weather and pollution data for every hour over the next 4 days. The app uses Node.js, Vue 3, HTML, CSS, and JavaScript. A live version can be visited at the website deployment on [Render](https://weather-bucket.onrender.com)
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ Follow the steps below to get the project up and running on your local machine:
 4. Start the development server by running the following command:
 `npm start`
 
-5. Once the server is running, open your web browser and visit [http://localhost:5510](http://localhost:5510) to access the Weather App. You can also start the app by opening the `index.html` file using Live Server extension in Visual Studio Code.
+5. Once the server is running, open your web browser and visit [http://localhost:5510](http://localhost:5510) to access the Weather App. You can also start the app by opening the `index.html` file using the Live Server extension in Visual Studio Code.
 
 ## Usage
 
@@ -34,7 +34,7 @@ The Weather App provides a user-friendly interface to view weather and pollution
 
 2. The app will fetch the weather and pollution data for the specified location and display it on the screen along with the location coordinates.
 
-4. The displayed weather information includes the actual temperature, feels like temperature, minimum and maximum temperature of the hour, wind speed, and rainfall for each hour.
+4. The displayed weather information includes the actual temperature, feels-like temperature, minimum and maximum temperature of the hour, wind speed, and rainfall for each hour.
 
 5. Additionally, the app also informs if the user needs to wear a mask in the upcoming four days according to the pollution data of the location.
 
@@ -42,9 +42,9 @@ The Weather App provides a user-friendly interface to view weather and pollution
 
 The project has the following structure:
 
-- `.vscode/` - Contains the `settings.json` file which contains the settings for Live Server in case you try to run the app using Live Server extension in Visual Studio Code.
+- `.vscode/` - Contains the `settings.json` file which contains the settings for Live Server in case you try to run the app using the Live Server extension in Visual Studio Code.
 - `node_modules/` - Contains the node modules on which the project depends. With the `npm install` command, you can update the modules whenever it suits you.
-- `scripts/` - Contains the scripts that are required to the application
+- `scripts/` - Contains the scripts that are required for the application
 - `stylesheets/` - Contains the stylesheets required to make the application look good.
 - `index.html` - The main entry point page for the application
 - `server.js` - The script that runs the server and provides responses to the front end in the form of data fetched from the OpenWeather API.
@@ -54,7 +54,7 @@ The project has the following structure:
 This project utilizes the following technologies and resources:
 
 - [Node.js](https://nodejs.org/)
-- [Vue.js](https://vuejs.org/)
+- [Vue 3](https://vuejs.org/)
 - [OpenWeather API](https://openweathermap.org/api)
 
 ## Contributing
