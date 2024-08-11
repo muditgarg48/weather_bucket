@@ -22,13 +22,13 @@ const App = {
         const responseCheck = async () => {
             //Function to check if the current city entered, exists or not
             const response = await retrieveTodayWeather();
-            if (response.cod === '200') {
+            if (response.cod === 200) {
                 content_show.value = true;
                 error_show.value = false;
                 cityCapitalise();
                 console.log(`Weather bucket is looking at the forecast of ${user_city.value}`);
                 compute(response);
-            } else if (response.cod === '404') {
+            } else if (response.cod === 404) {
                 content_show.value = false;
                 error_show.value = true;
             }
