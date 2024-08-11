@@ -58,7 +58,7 @@ const App = {
             const data = await server_response.json();
             console.log("Forecast JSON Data:");
             console.log(data);
-            items.splice(0, items.length, ...data.list);
+            items.value.splice(0, items.value.length, ...data.list);
             rainStatus();
         };
 
@@ -102,7 +102,7 @@ const App = {
         const rainStatus = () => {
             // Rain Status Check
             umbrellaCheck.value = "⛅🎐 The skies are clear for a few days 🎐⛅";
-            if (items.some(item => item.rain)) {
+            if (items.value.some(item => item.rain)) {
                 umbrellaCheck.value = "🌧🌂 You should keep an umbrella with you 🌂🌧";
             }
         };
@@ -128,7 +128,7 @@ const App = {
             user_city.value = '';
             umbrellaCheck.value = 'Info not retrieved!!';
             feelsLike.value = '';
-            items.splice(0, items.length);
+            items.value.splice(0, items.value.length);
             weather_icon_url.value = '';
         };
 
