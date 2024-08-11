@@ -1,144 +1,173 @@
+import { createApp, ref } from 'https://unpkg.com/vue@3.2.37/dist/vue.esm-browser.js';
 
-var app = Vue.createApp({
-    data() {
-        return {
-            api_id: 'aa3551b69f041b72a4094701dbc65f92',
-            user_city: '',
-            lat:'',
-            lon:'',
-            content_show: false,
-            pollution_show: false,
-            error_show: false,
-            umbrellaCheck: 'Info not retrieved!!',
-            feelsLike: '',
-            items: [],
-            weather_icon_url:''
-        }
-    },
-    methods: {
-        cityCapitalise() {
+const App = {
+    setup() {
+        const api_id = 'aa3551b69f041b72a4094701dbc65f92';
+        const user_city = ref('');
+        const lat = ref('');
+        const lon = ref('');
+        const content_show = ref(false);
+        const pollution_show = ref(false);
+        const error_show = ref(false);
+        const umbrellaCheck = ref('Info not retrieved!!');
+        const feelsLike = ref('');
+        const items = ref([]);
+        const weather_icon_url = ref('');
+
+        const cityCapitalise = () => {
             // a minor function just to capitalise the first letter of the city
-            this.user_city = this.user_city[0].toUpperCase()+this.user_city.substr(1)
-        },
-        responseCheck: async function() {
-            //Function to check if the current city entered, exists or not
-            let response = await this.retrieveTodayWeather()
-            if(response.cod == '200') {
-                this.content_show = true
-                this.error_show = false
-                this.cityCapitalise(response)
-                console.log(`Weather bucket is looking at the forecast of ${this.user_city}`)
-                this.compute(response)
-            } else if (response.cod == '404') {
-                this.content_show = false
-                this.error_show = true
-            }
-        },
-        retrieveTodayWeather: async function() {
-            //Fetching the weather data for today !!
-            let origin = "http://localhost:5510/"
-            let server_response = await fetch(origin+"current_weather/"+this.user_city)
-            server_response = await server_response.json()
-            if(server_response.data == "404") {
-                let error_response = {"cod":'404', "message":"City not found!"}
-                console.log("========================")
-                console.log(error_response)
-                return error_response
-            }
-            console.log("========================")
-            let server_data = server_response
-            console.log("Current Weather JSON Data:")
-            console.log(server_data)
-            return server_data
-        },
-        forecastFetch: async function() {
-            //Fetching the forecast data for 4 days !!
-            let origin = "http://localhost:5510/"
-            let server_response = await fetch(origin+"future_forecast/"+this.user_city)
-            let data = await server_response.json() 
-            console.log("Forecast JSON Data:")
-            console.log(data)
-            this.items = data.list
-            this.rainStatus()
-        },
-        retrievePollution: async function() {
-            //Fetching the pollution data for 4 days !!
-            let origin = "http://localhost:5510/"
-            let server_response = await fetch(origin+"pollution/"+this.lat+","+this.lon)
-            let data = await server_response.json() 
-            console.log("Pollution JSON Data:")
-            console.log(data)
-            let list = data.list
-            for(let i=0;i<92;i++) {
-                let pm_lvl = list[i].components.pm2_5
-                if(pm_lvl >= 10) {
-                    this.pollution_show = true
-                }
-            }
-        },
-        compute(response) {
-            // Main Function calling other functions to do every task required
-            this.posCalc(response)
-            this.weather_icon_url = this.retrieveImg2x(response.weather[0])
-            this.feelsLikeStatus(response)
-            this.forecastFetch()
-            this.retrievePollution()
-        },
-        posCalc(response) {
-            // Storing the lattitude and longitude of the current city
-            this.lat = response.coord.lat
-            this.lon = response.coord.lon
-        },
-        retrieveImg(weather) {
-            // Retrieving icon based on the current weather
-            let icon = weather.icon
-            let url = "https://openweathermap.org/img/wn/"+icon+".png"
-            return url
-        },
-        retrieveImg2x(weather) {
-            // Retrieving icon based on the current weather double the size
-            let icon = weather.icon
-            let url = "https://openweathermap.org/img/wn/"+icon+"@2x.png"
-            return url
-        },
-        rainStatus() {
-            // Rain Status Check
-            this.umbrellaCheck = "⛅🎐 The skies are clear for a few days 🎐⛅"
-            for(let i=0;i<this.items.length;i++) {
-                let rain = this.items[i].rain
-                if(rain != undefined) {
-                    this.umbrellaCheck = "🌧🌂 You should keep an umbrella with you 🌂🌧"
-                }
-            }
-        },
-        feelsLikeStatus(response) {
-            // Feels like Message construction
-            let feels_like = response.main.feels_like
-            this.feelsLike = "It feels like "+ (feels_like)+"°C"
-            if(feels_like<=12) {
-                this.feelsLike = "Pack for COLD. "+ this.feelsLike
-            } else if(feels_like>12 && feels_like<24) {
-                this.feelsLike = "Pack for MILD. "+ this.feelsLike
-            } else if(feels_like>=24) {
-                this.feelsLike = "Pack for HOT. "+ this.feelsLike
-            }
-        },
-        clearInput() {
-            // Clearing all variables
-            this.content_show = false
-            this.error_show = false
-            this.pollution_show = false
-            this.user_city = ''
-            this.umbrellaCheck= 'Info not retrieved!!'
-            this.feelsLike = ''
-            this.items = []
-            this.weather_icon_url = ''
-        },
-        printLocation() {
-            // Printing Location Name and Lattitude and Longitude
-            return this.user_city+" ("+this.lat+", "+this.lon+")"
-        }
-    }
-})
+            user_city.value = user_city.value.charAt(0).toUpperCase() + user_city.value.slice(1);
+        };
 
+        const responseCheck = async () => {
+            //Function to check if the current city entered, exists or not
+            const response = await retrieveTodayWeather();
+            if (response.cod === '200') {
+                content_show.value = true;
+                error_show.value = false;
+                cityCapitalise();
+                console.log(`Weather bucket is looking at the forecast of ${user_city.value}`);
+                compute(response);
+            } else if (response.cod === '404') {
+                content_show.value = false;
+                error_show.value = true;
+            }
+        };
+
+        const retrieveTodayWeather = async () => {
+            //Fetching the weather data for today !!
+            const origin = "http://localhost:5510/";
+            let server_response = await fetch(`${origin}current_weather/${user_city.value}`);
+            server_response = await server_response.json();
+            if (server_response.data === '404') {
+                const error_response = { "cod": '404', "message": "City not found!" };
+                console.log("========================");
+                console.log(error_response);
+                return error_response;
+            }
+            console.log("========================");
+            console.log("Current Weather JSON Data:");
+            console.log(server_response);
+            return server_response;
+        };
+
+        const forecastFetch = async () => {
+            //Fetching the forecast data for 4 days !!
+            const origin = "http://localhost:5510/";
+            const server_response = await fetch(`${origin}future_forecast/${user_city.value}`);
+            const data = await server_response.json();
+            console.log("Forecast JSON Data:");
+            console.log(data);
+            items.splice(0, items.length, ...data.list);
+            rainStatus();
+        };
+
+        const retrievePollution = async () => {
+            //Fetching the pollution data for 4 days !!
+            const origin = "http://localhost:5510/";
+            const server_response = await fetch(`${origin}pollution/${lat.value},${lon.value}`);
+            const data = await server_response.json();
+            console.log("Pollution JSON Data:");
+            console.log(data);
+            const list = data.list;
+            pollution_show.value = list.some(item => item.components.pm2_5 >= 10);
+        };
+
+        const compute = (response) => {
+            // Main Function calling other functions to do every task required
+            posCalc(response);
+            weather_icon_url.value = retrieveImg2x(response.weather[0]);
+            feelsLikeStatus(response);
+            forecastFetch();
+            retrievePollution();
+        };
+
+        const posCalc = (response) => {
+            lat.value = response.coord.lat;
+            lon.value = response.coord.lon;
+        };
+
+        const retrieveImg = (weather) => {
+            // Retrieving icon based on the current weather
+            const icon = weather.icon;
+            return `https://openweathermap.org/img/wn/${icon}.png`;
+        };
+
+        const retrieveImg2x = (weather) => {
+            // Retrieving icon based on the current weather double the size
+            const icon = weather.icon;
+            return `https://openweathermap.org/img/wn/${icon}@2x.png`;
+        };
+
+        const rainStatus = () => {
+            // Rain Status Check
+            umbrellaCheck.value = "⛅🎐 The skies are clear for a few days 🎐⛅";
+            if (items.some(item => item.rain)) {
+                umbrellaCheck.value = "🌧🌂 You should keep an umbrella with you 🌂🌧";
+            }
+        };
+
+        const feelsLikeStatus = (response) => {
+            // Feels like Message construction
+            const feels_like = response.main.feels_like;
+            feelsLike.value = `It feels like ${feels_like}°C`;
+            if (feels_like <= 12) {
+                feelsLike.value = `Pack for COLD. ${feelsLike.value}`;
+            } else if (feels_like > 12 && feels_like < 24) {
+                feelsLike.value = `Pack for MILD. ${feelsLike.value}`;
+            } else if (feels_like >= 24) {
+                feelsLike.value = `Pack for HOT. ${feelsLike.value}`;
+            }
+        };
+
+        const clearInput = () => {
+            // Clearing all variables
+            content_show.value = false;
+            error_show.value = false;
+            pollution_show.value = false;
+            user_city.value = '';
+            umbrellaCheck.value = 'Info not retrieved!!';
+            feelsLike.value = '';
+            items.splice(0, items.length);
+            weather_icon_url.value = '';
+        };
+
+        const printLocation = () => {
+            // Printing Location Name and Lattitude and Longitude
+            return `${user_city.value} (${lat.value}, ${lon.value})`;
+        };
+
+        // onMounted(() => {
+        // });
+
+        return {
+            api_id,
+            user_city,
+            lat,
+            lon,
+            content_show,
+            pollution_show,
+            error_show,
+            umbrellaCheck,
+            feelsLike,
+            items,
+            weather_icon_url,
+            cityCapitalise,
+            responseCheck,
+            retrieveTodayWeather,
+            forecastFetch,
+            retrievePollution,
+            compute,
+            posCalc,
+            retrieveImg,
+            retrieveImg2x,
+            rainStatus,
+            feelsLikeStatus,
+            clearInput,
+            printLocation,
+        };
+    },
+};
+
+const app = createApp(App);
 app.mount('#app');
