@@ -36,8 +36,9 @@ const App = {
 
         const retrieveTodayWeather = async () => {
             //Fetching the weather data for today !!
-            const origin = "http://localhost:5510/";
-            let server_response = await fetch(`${origin}current_weather/${user_city.value}`);
+            // const origin = "http://localhost:5510/";
+            // let server_response = await fetch(`${origin}current_weather/${user_city.value}`);
+            let server_response = await fetch(`/current_weather/${user_city.value}`);
             server_response = await server_response.json();
             if (server_response.data === '404') {
                 const error_response = { "cod": '404', "message": "City not found!" };
@@ -53,8 +54,9 @@ const App = {
 
         const forecastFetch = async () => {
             //Fetching the forecast data for 4 days !!
-            const origin = "http://localhost:5510/";
-            const server_response = await fetch(`${origin}future_forecast/${user_city.value}`);
+            // const origin = "http://localhost:5510/";
+            // const server_response = await fetch(`${origin}future_forecast/${user_city.value}`);
+            const server_response = await fetch(`/future_forecast/${user_city.value}`);
             const data = await server_response.json();
             console.log("Forecast JSON Data:");
             console.log(data);
@@ -64,8 +66,9 @@ const App = {
 
         const retrievePollution = async () => {
             //Fetching the pollution data for 4 days !!
-            const origin = "http://localhost:5510/";
-            const server_response = await fetch(`${origin}pollution/${lat.value},${lon.value}`);
+            // const origin = "http://localhost:5510/";
+            // const server_response = await fetch(`${origin}pollution/${lat.value},${lon.value}`);
+            const server_response = await fetch(`/pollution/${lat.value},${lon.value}`);
             const data = await server_response.json();
             console.log("Pollution JSON Data:");
             console.log(data);
